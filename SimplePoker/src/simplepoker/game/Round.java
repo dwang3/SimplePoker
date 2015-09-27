@@ -19,19 +19,16 @@ public class Round {
 		return players;
 	}
 	
-	public void addPlayer() {
-		players.add(new Player(numPlayers++));
+	public void addPlayer(int id, String hand) {
+		this.players.add(new Player(id));
 	}
 	
-	public void addPlayer(int id) {
-		players.add(new Player(id));
+	public void addPlayer() {
+		this.players.add(new Player(numPlayers++));
 	}
 	
 	public boolean isValidRound() {
-		if (numPlayers >= 2 && numPlayers <= 4)
-			return true;
-		else
-		    return false;
+		return numPlayers >= 2 && numPlayers <= 4;
 	}
 	
 	public static void main (String args[]) {
