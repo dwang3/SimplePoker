@@ -26,6 +26,9 @@ public class TestPlayers extends TestCase {
 		assertTrue("enough players to start", r.isValidRound());
 	}
 
+	public void testInvalidID() {
+		
+	}
 	
 	public void testValidPlayerIDs () {
 		Round r = new Round();
