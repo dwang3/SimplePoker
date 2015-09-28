@@ -291,11 +291,4 @@ public class Player implements Comparable<Player> {
 		return builder.toString();
 	}
 
-	public static void main(String args[]) {
-		Player p = new Player(1,"AceSpades AceHearts TwoClubs TenDiamonds ThreeHearts");
-		System.out.println(p.printPlayer());
-		System.out.println(p.hasPair());
-		System.out.println(p.getRanking());
-	}
-
 }

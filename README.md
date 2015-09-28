@@ -18,3 +18,5 @@ invalid rounds (any invalid cards, hands or IDs) will not be output
 
 you can input cards using a playerId followed by a string of space separated cards or with a numerical rank and suit
 invalid cards may be added but rounds will not be able to be output with them
+
+Hand.java is unused

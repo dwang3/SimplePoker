@@ -84,12 +84,4 @@ public class Round {
 		return results.toString();
 	}
 	
-	public static void main (String args[]) {
-		Round r = new Round();
-		r.addPlayer(1,"AceSpades KingSpades QueenSpades JackSpades TenSpades");
-		r.addPlayer(2,"TwoDiamonds ThreeDiamonds FourDiamonds FiveDiamonds SixDiamonds");
-		r.addPlayer(3,"AceHearts KingHearts QueenHearts JackHearts TenHearts");
-		System.out.println(r.roundResults());
-	}
-	
 }
