@@ -1,11 +1,11 @@
 package simplepoker.game;
 
-import java.util.StringTokenizer;
+import java.util.ArrayList;
 
-public class Card {
+public class Card implements Comparable<Card> {
     private int cardRank;
     private int cardSuit;
-    private String cardString;
+    private String cardString; //used for testing purposes
     
     static final String[] Suit = {"","Diamonds","Clubs","Hearts","Spades"};
     static final String[] Rank = {"","","Two","Three","Four","Five","Six","Seven","Eight","Nine","Ten","Jack","Queen","King","Ace"};
@@ -73,6 +73,20 @@ public class Card {
     public boolean isValidCard() {
     	return isValidSuit(this.cardSuit) && isValidRank(this.cardRank);
     }
+    
+    public static boolean areDuplicateCards(ArrayList<Card> cards) {
+    	boolean duplicateCards = false;
+    	if (cards.isEmpty())
+    		return duplicateCards;
+    	
+		for (int i = 0; i < cards.size(); i++) {
+			for (int j = i + 1; j < cards.size(); j++) {
+				if (i != j && cards.get(i).equals(cards.get(j)))
+					duplicateCards = true;
+			}
+		}
+		return duplicateCards;
+    }
 
     public static String rankToString(int rank) {
         switch (rank) {
@@ -131,24 +145,42 @@ public class Card {
     	String rank = "";
     	String suit = "";
     	
+    	//extract rank from string
     	for (int i=2; i<=14; i++) {
     		if (card.contains(Rank[i])) {
     			rank = Rank[i];
     			parsedCard.cardRank = i;
     		}
     	}
+    	
+    	//remaining string is suit, even if invalid
     	suit = card.replaceFirst(rank, "");
     	
     	for (int i=1; i<=4; i++) {
     		if (suit.equals(Suit[i]))
     			parsedCard.cardSuit = i;
     	}
+    	
     	return parsedCard;
     }
     
+    //used to check duplicate cards
     public boolean equals (Card c) {
     	return this.cardRank == c.cardRank && this.cardSuit == c.cardSuit;
     }
+    
+    public int compareTo(Card c) {
+		int result = 0;
+		
+		if (this.cardRank > c.cardRank) {
+			result = 1;
+		} else if (c.cardRank > this.cardRank) {
+			result = -1;
+		} else {
+		}
+		
+		return result;
+	}
     
     @Override public String toString() {
     	return rankToString(this.getRank()) + suitToString(this.getSuit());
