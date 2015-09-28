@@ -8,7 +8,7 @@ public class Card {
     private String cardString;
     
     static final String[] Suit = {"","Diamonds","Clubs","Hearts","Spades"};
-    static final String[] Rank = {"","Ace","Two","Three","Four","Five","Six","Seven","Eight","Nine","Ten","Jack","Queen","King"};
+    static final String[] Rank = {"","","Two","Three","Four","Five","Six","Seven","Eight","Nine","Ten","Jack","Queen","King","Ace"};
     
     public final static int DIAMONDS = 1;
     public final static int CLUBS    = 2;
@@ -32,17 +32,22 @@ public class Card {
     public Card () {
     	cardRank = 0;
     	cardSuit = 0;
+    	cardString = "";
+    }
+    
+    //copy constructor
+    public Card (Card c) {
+    	this(c.getRank(),c.getSuit());
     }
 
     public Card(int rank, int suit) {
-        //assert isValidRank(rank);
-        //assert isValidSuit(suit);
         this.cardRank = rank;
         this.cardSuit = suit;
     }
 
     public Card(String card) {
-    	this.cardString = card;
+    	this.cardRank = parseCard(card).cardRank;
+    	this.cardSuit = parseCard(card).cardSuit;
     }
 
     public int getSuit() {
@@ -61,6 +66,10 @@ public class Card {
         return DIAMONDS <= suit && suit <= SPADES;
     }
     
+    public static boolean isValidCard(Card c) {
+    	return isValidSuit(c.cardSuit) && isValidRank(c.cardRank);
+    }
+    
     public boolean isValidCard() {
     	return isValidSuit(this.cardSuit) && isValidRank(this.cardRank);
     }
@@ -68,7 +77,7 @@ public class Card {
     public static String rankToString(int rank) {
         switch (rank) {
         case TWO:
-            return "Deuce";
+            return "Two";
         case THREE:
             return "Three";
         case FOUR:
@@ -114,51 +123,35 @@ public class Card {
     }
     
     public static Card parseCard(String card) { 
-    	Card cardString = new Card();
-    	String rank;
-    	String suit = "Diamonds";
-    	switch (card.substring(0, 5)) {
-    	    case "Ace":
-    	        rank = "14";
-    	        break;
-    	    case "Jack":
-    	        rank = "11";
-    	        break;
-    	    case "Queen":
-    	        rank = "12";
-    	        break;
-    	    case "King":
-    	        rank = "13";
-    	        break;
-    	    default:
-    	        rank = card.substring(0, 5);
-    	        break;
+    	
+    	if (card == null)
+    		return null;
+    	
+    	Card parsedCard = new Card();
+    	String rank = "";
+    	String suit = "";
+    	
+    	for (int i=2; i<=14; i++) {
+    		if (card.contains(Rank[i])) {
+    			rank = Rank[i];
+    			parsedCard.cardRank = i;
+    		}
     	}
-    	if (Integer.parseInt(rank) > 13 || Integer.parseInt(rank) < 0) { 
-    	    return null;
+    	suit = card.replaceFirst(rank, "");
+    	
+    	for (int i=1; i<=4; i++) {
+    		if (suit.equals(Suit[i]))
+    			parsedCard.cardSuit = i;
     	}
-    	cardString.cardRank = Integer.parseInt(rank); 
-    	switch (suit) { 
-    	    case "Diamonds":
-    	    	cardString.cardSuit = 1;
-    	        return cardString;
-    	    case "Clubs":
-    	    	cardString.cardSuit = 2;
-    	        break;
-    	    case "Hearts":
-    	    	cardString.cardSuit = 3;
-    	        break;
-    	    case "Spades":
-    	    	cardString.cardSuit = 4;
-    	        break;
-    	    default: 
-    	        return null;
-    	}
-    	return cardString;
+    	return parsedCard;
+    }
+    
+    public boolean equals (Card c) {
+    	return this.cardRank == c.cardRank && this.cardSuit == c.cardSuit;
     }
     
     @Override public String toString() {
-    	return cardString;
+    	return rankToString(this.getRank()) + suitToString(this.getSuit());
     }
     
 }

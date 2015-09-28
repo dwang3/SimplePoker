@@ -5,14 +5,20 @@ public class TestPlayers extends TestCase {
 	public TestPlayers (String name) {
 		super(name);
 	}
+	
+	private Round r;
+	private Player p;
+	
+	public void setUp() {
+		r = new Round();
+	}
+	
 	/* test for valid number of players 2-4 */
 	public void testNoPlayers () {
-		Round r = new Round();
 		assertFalse("not enough players to start!", r.isValidRound());
 	}
 	
 	public void testTooManyPlayers () {
-		Round r = new Round();
 		r.addPlayer();
 		r.addPlayer();
 		r.addPlayer();
@@ -22,7 +28,6 @@ public class TestPlayers extends TestCase {
 	}
 	
 	public void testEnoughPlayers () {
-		Round r = new Round();
 		r.addPlayer();
 		r.addPlayer();
 		r.addPlayer();
@@ -30,7 +35,6 @@ public class TestPlayers extends TestCase {
 	}
 	
 	public void testValidPlayerIDs () {
-		Round r = new Round();
 		r.addPlayer();
 		r.addPlayer();
 		r.addPlayer();
@@ -42,7 +46,28 @@ public class TestPlayers extends TestCase {
 		}
 	}
 	
-	public void testPlayerIDisFirstChar () {
+	public void testDuplicateIDs () {
+		r.addPlayer(1,"AceSpades KingSpades QueenSpades JackSpades TenSpades");
+		r.addPlayer(1,"AceHearts KingHearts QueenHearts JackHearts TenHearts");
+		
+	}
+	
+	public void testHasFiveCards () {
+		r.addPlayer(1,"AceSpades KingSpades QueenSpades JackSpades TenSpades");
+	}
+	
+	public void testPlayerIDisFirst () {
+		p = new Player(1,"AceSpades KingSpades QueenSpades JackSpades TenSpades");
+		int id = Character.getNumericValue(p.printPlayer().charAt(0));
+		assertTrue(id == p.getID());
+	}
+	
+	public void testDuplicateCards () {
+		p = new Player(1,"AceSpades KingSpades QueenSpades JackSpades TenSpades");
+		assertTrue(p.hasDuplicateCards());
+	}
+	
+	public void testValidPlayer () {
 		
 	}
 	

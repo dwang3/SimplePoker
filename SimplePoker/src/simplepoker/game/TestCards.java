@@ -10,23 +10,29 @@ public class TestCards extends TestCase {
 	
 	public void setUp() {
 		r = new Round();
-		r.addPlayer( );
-		r.addPlayer();
-		r.addPlayer();
-		r.addPlayer();
 	}
-	
-	//test for valid cards for random cards, added by rank and suit
-	public void testValidCards() {
+
+	public void testValidCard () {
+		r.addPlayer(1,"AceSpades KingSpades QueenSpades JackSpades TenSpades");
 		for (Player p : r.getPlayers()) {
 			for (Card c : p.getCards()) {
-				assertTrue(c.isValidCard());
+				assertTrue("all cards are valid",Card.isValidCard(c));
 			}
 		}
 	}
 	
-	//test for valid cards for cards added by a string separated by spaces
-	public void testValidCards2() {
-		
+	public void testInvalidRank () {
+		r.addPlayer(1,"AceSpades KingSpades QueenSpades JackSpades FourteenSpades");
+		for (Player p : r.getPlayers()) {
+			assertTrue("one or more invalid cards!",p.hasInvalidCards());
+		}
 	}
+	
+	public void testInvalidSuit () {
+		r.addPlayer(1,"AceSpades KingSpades QueenSpades JackSpades TenApples");
+		for (Player p : r.getPlayers()) {
+			assertTrue("one or more invalid cards",p.hasInvalidCards());
+		}
+	}
+	
 }

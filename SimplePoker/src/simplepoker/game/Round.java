@@ -20,11 +20,12 @@ public class Round {
 	}
 	
 	public void addPlayer(int id, String hand) {
-		this.players.add(new Player(id));
+		this.players.add(new Player(id, hand));
+		numPlayers ++;
 	}
 	
 	public void addPlayer() {
-		this.players.add(new Player(numPlayers++));
+		this.players.add(new Player(numPlayers ++));
 	}
 	
 	public boolean isValidRound() {
